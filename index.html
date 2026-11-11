@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>ClipForge</title>
+<link rel="stylesheet" href="css/style.css"></head><body>
+<header id="top"><b class="logo">ClipForge</b>
+<button id="btnNew">New project</button><button id="btnImport">Import media</button>
+<input id="file" type="file" accept="video/*,audio/*" multiple hidden>
+<button id="btnUndo">Undo</button><button id="btnRedo">Redo</button>
+<input id="pname" value="Untitled project" aria-label="Project name">
+<button id="btnSave">Save project</button><button id="btnOpen">Projects</button>
+<button id="btnExport" class="primary">Export video</button></header>
+<main>
+<aside id="side">
+<section><h3>Media library</h3><div id="lib" class="drop">Drop video or audio files here</div></section>
+<section><h3>Clip</h3>
+<label>Start (s)<input id="cStart" type="number" step="0.1" min="0"></label>
+<label>End (s)<input id="cEnd" type="number" step="0.1" min="0"></label>
+<label>Speed<select id="cSpeed"><option>0.25</option><option>0.5</option><option>0.75</option><option selected>1</option><option>1.25</option><option>1.5</option><option>2</option><option>4</option></select></label>
+<label>Volume <output id="oVol">100</output>%<input id="cVol" type="range" min="0" max="200" value="100"></label>
+<label>Crop<select id="cCrop"><option value="">Original</option><option value="16/9">16:9</option><option value="9/16">9:16</option><option value="1/1">1:1</option><option value="4/5">4:5</option></select></label>
+<label>Rotate<select id="cRot"><option value="0">0°</option><option value="90">90°</option><option value="180">180°</option><option value="270">270°</option></select></label>
+<label><input type="checkbox" id="cFlipH"> Flip horizontal</label><label><input type="checkbox" id="cFlipV"> Flip vertical</label>
+<label>Brightness <input id="cBri" type="range" min="-50" max="50" value="0"></label>
+<label>Contrast <input id="cCon" type="range" min="50" max="150" value="100"></label>
+<label>Saturation <input id="cSat" type="range" min="0" max="200" value="100"></label>
+<button id="btnSplit">Split at playhead (S)</button><button id="btnDel">Delete clip</button>
+<button id="btnExtract">Extract audio (MP3)</button></section>
+<section><h3>Voice enhance</h3>
+<label>Noise reduction <output></output><input id="vNoise" type="range" min="0" max="100" value="0"></label>
+<label>Voice clarity <output></output><input id="vClar" type="range" min="0" max="100" value="0"></label>
+<label>Background reduction <output></output><input id="vBg" type="range" min="0" max="100" value="0"></label>
+<label>Volume <output></output><input id="vVol" type="range" min="0" max="200" value="100"></label>
+<label><input type="checkbox" id="vNorm"> Normalize loudness</label>
+<label>Fade in/out (s)<input id="vFade" type="number" min="0" step="0.5" value="0"></label>
+<button id="btnEnh">Enhance voice</button><button id="btnPrev">Preview result</button><button id="btnReset">Reset audio</button>
+<p class="note">Preview uses Web Audio filters. Export applies FFmpeg denoise (afftdn), EQ and loudnorm.</p></section>
+</aside>
+<section id="stage"><div id="vwrap"><video id="vid" playsinline></video></div>
+<div id="ctrl"><button id="btnPlay">Play</button><span id="time">0:00 / 0:00</span>
+<select id="aspect"><option value="16/9">16:9</option><option value="9/16">9:16</option><option value="1/1">1:1</option><option value="4/5">4:5</option></select>
+<button id="btnFs">Fullscreen</button></div></section>
+</main>
+<footer id="tl"><div id="tlbar"><button id="zOut">−</button><button id="zIn">+</button><span id="msg">Import a video to begin.</span></div>
+<div id="ruler"></div><div id="track"></div></footer>
+<dialog id="dlgExp"><h3>Export</h3>
+<label>Resolution<select id="eRes"><option value="480">480p</option><option value="720" selected>720p</option><option value="1080">1080p</option></select></label>
+<label>Format<select id="eFmt"><option value="mp4">MP4 (H.264/AAC)</option><option value="webm">WebM (VP8/Opus)</option></select></label>
+<label>Frame rate<select id="eFps"><option>24</option><option selected>30</option><option>60</option></select></label>
+<label>Quality<select id="eQ"><option value="30">Low</option><option value="25" selected>Medium</option><option value="20">High</option></select></label>
+<progress id="prog" value="0" max="1" hidden></progress><div id="estat"></div>
+<div class="row"><button id="eGo" class="primary">Start export</button><button id="eCancel">Cancel</button><button id="eClose">Close</button></div><a id="eDl" hidden>Download</a></dialog>
+<dialog id="dlgProj"><h3>Saved projects</h3><div id="plist"></div><button id="pClose">Close</button></dialog>
+<script src="vendor/ffmpeg.js"></script>
+<script type="module" src="js/app.js"></script></body></html>
